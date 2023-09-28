@@ -1,0 +1,132 @@
+package ra.run;
+
+import ra.business.controller.implement.SingerController;
+import ra.business.entity.Singer;
+import ra.business.service.implement.SingerService;
+import ra.util.InputMethods;
+
+public class MusicManagement {
+    private static SingerController singerController =new SingerController();
+    public static void main(String[] args) {
+        while (true){
+            System.out.println("************************MUSIC-MANAGEMENT*************************\n" +
+                    "1. Quản lý ca sĩ [20 điểm]\n" +
+                    "2. Quản lý bài hát [20 điểm]\n" +
+                    "3. Tìm kiếm bài hát [25 điểm]\n" +
+                    "4. Thoát [5 điểm]");
+
+            System.out.println("Nhập lựa chọn của bạn");
+            byte choice = InputMethods.getByte();
+            switch (choice){
+                case 1:
+                    // quan li ca sĩ
+                    singerManagement();
+                    break;
+                case 2:
+//                    quản li bai hat
+                    break;
+                case 3:
+                    // tìm kiếm
+                    break;
+                case 4:
+                    System.out.println("Thoát");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Nhập không đúng");
+            }
+        }
+    }
+
+
+    public static void singerManagement(){
+        while (true){
+            System.out.println("**********************SINGER-MANAGEMENT*************************\n" +
+                    "1.Nhập vào số lượng ca sĩ cần thêm và nhập thông tin cần thêm mới (có validate dữ\n" +
+                    "liệu nhập vào) [10 điểm]\n" +
+                    "2.Hiển thị danh sách tất cả ca sĩ đã lưu trữ [5 điểm]\n" +
+                    "3.Thay đổi thông tin ca sĩ theo mã id [10 điểm]\n" +
+                    "4.Xóa ca sĩ theo mã id (kiểm tra xem nếu ca sĩ có bài hát thì không xóa được)[5 điểm]\n" +
+                    "5.Thoát");
+
+            System.out.println("Nhập lựa chọn");
+            byte choice = InputMethods.getByte();
+            switch (choice){
+                case 1:
+                    // thêm mới
+                    addNewSinger();
+                    break;
+                case 2:
+                    // hiển thị
+                    displayAllSinger();
+                    break;
+                case 3:
+                    // chỉnh sửa
+                    editSinger();
+                    break;
+                case 4:
+                    // xóa
+                    deleteSinger();
+                    break;
+                case 5:
+                   return;
+                default:
+                    System.out.println("Nhạp sai");
+            }
+        }
+    }
+
+    public static void addNewSinger(){
+        // nhập số lượng
+        System.out.println("Nhập số lượng ca sĩ cân thêm");
+        byte count = InputMethods.getByte();
+        for (int i = 0; i < count; i++) {
+            System.out.println("Nhập thông tin cho ca sĩ thứ "+(i+1));
+            Singer newSinger = new Singer();
+            // có id tự tăng
+            newSinger.setSingerId(singerController.getIdMax());
+            newSinger.inputData();
+            // đã có dữ liệu thì tiến hanhhf thêm mới
+            singerController.add(newSinger);
+            System.out.println("Thêm mới thành công");
+        }
+    }
+    public  static void displayAllSinger(){
+        if(singerController.getSize()==0){
+            System.out.println("Danh sách trống");
+            return;
+        }
+        System.out.println("Danh sách ca sĩ");
+        for (int i = 0; i < singerController.getSize(); i++) {
+            singerController.findAll()[i].displayData();
+        }
+    }
+    public static void editSinger(){
+        System.out.println("Nhập id cần sửa");
+        int idEdit = InputMethods.getInteger();
+        Singer singerEdit = singerController.findById(idEdit);
+        if (singerEdit == null){
+            System.out.println("Id không tôn tại");
+            return;
+        }
+        // hiển thị thông tin cũ
+        System.out.println("Thông tin cũ của ca sĩ");
+        singerEdit.displayData();
+        // cho phép sửa
+        singerEdit.inputData();
+        // lưu lại
+        singerController.update(singerEdit);
+        System.out.println("Cập nhật thành công");
+    }
+
+    public static  void deleteSinger(){
+        System.out.println("Nhập id cần xóa");
+        int idDel = InputMethods.getInteger();
+        if (singerController.findById(idDel)== null){
+            System.out.println("Id không tôn tại");
+            return;
+        }
+        singerController.delete(idDel);
+        System.out.println("xóa thành công");
+    }
+}
