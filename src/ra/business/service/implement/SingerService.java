@@ -1,11 +1,12 @@
 package ra.business.service.implement;
 
 import ra.business.entity.Singer;
+import ra.business.entity.Song;
 import ra.business.service.ISinger;
 
 public class SingerService implements ISinger {
     private Singer[] singers;
-    private int size;
+    private int size=2;
     private int idMax = 1;
 
     public SingerService() {
@@ -77,5 +78,21 @@ public class SingerService implements ISinger {
 
     public int getIdMax() {
         return idMax;
+    }
+
+    @Override
+    public Singer[] findAllByNameOrGenre(String name) {
+        Singer[] searchList  = new Singer[size];
+        int index= 0;
+        for (int i = 0; i < size; i++) {
+            if(singers[i].getSingerName().contains(name)||singers[i].getGenre().contains(name)){
+                searchList[index] = singers[i];
+                index++;
+            }
+        }
+        if (index ==0){
+            return new Singer[0];
+        }
+        return searchList;
     }
 }

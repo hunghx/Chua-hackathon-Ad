@@ -5,7 +5,7 @@ import ra.business.entity.Singer;
 import ra.business.service.implement.SingerService;
 
 public class SingerController implements ISinger {
-    public SingerService singerService =new SingerService();
+    public SingerService singerService = new SingerService();
 
 
     @Override
@@ -20,7 +20,7 @@ public class SingerController implements ISinger {
 
     @Override
     public void add(Singer singer) {
-      singerService.add(singer);
+        singerService.add(singer);
     }
 
     @Override
@@ -30,14 +30,16 @@ public class SingerController implements ISinger {
 
     @Override
     public void delete(Integer id) {
-       singerService.delete(id);
+        singerService.delete(id);
     }
 
+    @Override
     public int getSize() {
 
         return singerService.getSize();
     }
-//    public  int getNewId(){
+
+    //    public  int getNewId(){
 //        int idMax = 0;
 //        for (int i = 0; i <size ; i++) {
 //            if (singers[i].getSingerId()>idMax){
@@ -46,8 +48,13 @@ public class SingerController implements ISinger {
 //        }
 //        return idMax+1;
 //    }
-
+    @Override
     public int getIdMax() {
         return singerService.getIdMax();
+    }
+
+    @Override
+    public Singer[] findAllByNameOrGenre(String name) {
+        return singerService.findAllByNameOrGenre(name);
     }
 }

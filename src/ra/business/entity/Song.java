@@ -1,8 +1,41 @@
 package ra.business.entity;
 
+import ra.util.InputMethods;
+import ra.util.SongValidateInput;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Song {
+public class Song implements IOData{
+    @Override
+    public void inputData() {
+        if(songId==null){
+        System.out.println("Nhập id cho bài hát(có 4 kí tự , bắt đầu bằng chữ S)");
+        this.songId = SongValidateInput.inputSongId();
+        }
+        System.out.println("Nhập tên Bài hát ");
+        this.songName = InputMethods.getString();
+        System.out.println("Nhập người sáng tác");
+        this.songWriter = InputMethods.getString();
+System.out.println("Nhập mô tả");
+        this.descriptions = InputMethods.getString();
+
+        this.singer = SongValidateInput.inputSinger();
+        this.createdDate = new Date();
+        System.out.println("nhập trạng thái bài hát (true/false)");
+        this.songStatus = InputMethods.getBoolean();
+    }
+
+    @Override
+    public void displayData() {
+        SimpleDateFormat sp = new SimpleDateFormat("dd-MM-yyyy");
+        System.out.println("---------------------------------------");
+        System.out.println("ID : "+songId+" - SongName : -"+songName);
+        System.out.println("Description : "+descriptions);
+        System.out.println("Song writer: "+songWriter+" - Singer : "+singer.getSingerName());
+        System.out.println("CreatedDate : "+createdDate+" - Status : -"+(songStatus?"hiện":"ẩn"));
+    }
+
     private  String songId;
     private  String songName;
     private  String descriptions;
