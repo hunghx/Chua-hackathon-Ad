@@ -1,28 +1,29 @@
 package ra.business.service.implement;
 
 import ra.business.entity.Singer;
-import ra.business.entity.Song;
 import ra.business.service.ISinger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SingerService implements ISinger {
-    private Singer[] singers;
-    private int size=2;
+    private List<Singer> singers;
     private int idMax = 1;
 
     public SingerService() {
-        singers =  new Singer[100];
+        singers =  new ArrayList<>();
     }
 
     @Override
-    public Singer[] findAll() {
+    public List<Singer> findAll() {
         return singers;
     }
 
     @Override
     public Singer findById(Integer id) {
-        for (int i = 0; i < size; i++) {
-            if(singers[i].getSingerId()==id){
-                return singers[i];
+        for (Singer s:singers) {
+            if(s.getSingerId()==id){
+                return s;
             }
         }
         return null;
@@ -30,68 +31,31 @@ public class SingerService implements ISinger {
 
     @Override
     public void add(Singer singer) {
-       singers[size] = singer;
-       size++;
+       singers.add(singer);
        idMax++;
     }
 
     @Override
     public void update(Singer singer) {
-        for (int i = 0; i < size; i++) {
-            if (singers[i].getSingerId()==singer.getSingerId()){
-                // cập nhật
-                singers[i] = singer;
-                break;
-            }
-        }
+        singers.set(singers.indexOf(findById(singer.getSingerId())),singer);
     }
 
     @Override
     public void delete(Integer id) {
-        int indexDel = -1;
-        // tìm ra vị trí cần xóa
-        for (int i = 0; i < size; i++) {
-            if (singers[i].getSingerId()==id){
-                indexDel=i;
-            }
-        }
-        // thực hiện xóa
-        for (int i = indexDel; i < size-1 ; i++) {
-                singers[i] = singers[i+1];
-        }
-        singers[size] =null;
-        size--;
+       singers.remove(findById(id));
     }
-
-    public int getSize() {
-        return size;
-    }
-//    public  int getNewId(){
-//        int idMax = 0;
-//        for (int i = 0; i <size ; i++) {
-//            if (singers[i].getSingerId()>idMax){
-//                idMax= singers[i].getSingerId();
-//            }
-//        }
-//        return idMax+1;
-//    }
 
     public int getIdMax() {
         return idMax;
     }
 
     @Override
-    public Singer[] findAllByNameOrGenre(String name) {
-        Singer[] searchList  = new Singer[size];
-        int index= 0;
-        for (int i = 0; i < size; i++) {
-            if(singers[i].getSingerName().contains(name)||singers[i].getGenre().contains(name)){
-                searchList[index] = singers[i];
-                index++;
+    public List<Singer> findAllByNameOrGenre(String name) {
+       List<Singer> searchList = new ArrayList<>();
+        for (Singer s:singers) {
+            if(s.getSingerName().contains(name)|| s.getGenre().contains(name)){
+                searchList.add(s);
             }
-        }
-        if (index ==0){
-            return new Singer[0];
         }
         return searchList;
     }

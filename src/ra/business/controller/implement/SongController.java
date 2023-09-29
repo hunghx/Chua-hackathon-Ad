@@ -4,12 +4,10 @@ import ra.business.controller.ISong;
 import ra.business.entity.Song;
 import ra.business.service.implement.SongService;
 
+import java.util.List;
+
 public class SongController implements ISong {
     private SongService songService =new SongService();
-    @Override
-    public Song[] findAll() {
-        return songService.findAll();
-    }
 
     @Override
     public Song findById(String id) {
@@ -31,10 +29,7 @@ public class SongController implements ISong {
         songService.delete(id);
     }
 
-    @Override
-    public int getSize() {
-        return songService.getSize();
-    }
+
 
     @Override
     public boolean existsBySongId(String id) {
@@ -46,13 +41,17 @@ public class SongController implements ISong {
     }
 
     @Override
-    public Song[] sortByName() {
-        return songService.sortByName();
+    public List<Song> findAll() {
+        return songService.findAll();
     }
 
     @Override
-    public Song[] findSongBySingerNameOrGenre(String name) {
+    public List<Song> findSongBySingerNameOrGenre(String name) {
         return songService.findSongBySingerNameOrGenre(name);
+    }
 
+    @Override
+    public List<Song> sortByName() {
+        return songService.sortByName();
     }
 }

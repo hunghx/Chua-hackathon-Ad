@@ -4,13 +4,20 @@ import ra.business.controller.ISinger;
 import ra.business.entity.Singer;
 import ra.business.service.implement.SingerService;
 
+import java.util.List;
+
 public class SingerController implements ISinger {
     public SingerService singerService = new SingerService();
 
 
     @Override
-    public Singer[] findAll() {
+    public List<Singer> findAll() {
         return singerService.findAll();
+    }
+
+    @Override
+    public List<Singer> findAllByNameOrGenre(String name) {
+        return singerService.findAllByNameOrGenre(name);
     }
 
     @Override
@@ -33,11 +40,7 @@ public class SingerController implements ISinger {
         singerService.delete(id);
     }
 
-    @Override
-    public int getSize() {
 
-        return singerService.getSize();
-    }
 
     //    public  int getNewId(){
 //        int idMax = 0;
@@ -53,8 +56,5 @@ public class SingerController implements ISinger {
         return singerService.getIdMax();
     }
 
-    @Override
-    public Singer[] findAllByNameOrGenre(String name) {
-        return singerService.findAllByNameOrGenre(name);
-    }
+
 }

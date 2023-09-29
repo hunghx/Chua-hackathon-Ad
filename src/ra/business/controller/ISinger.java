@@ -2,8 +2,10 @@ package ra.business.controller;
 
 import ra.business.entity.Singer;
 
+import java.util.List;
+
 public interface ISinger extends IGeneric<Singer,Integer> {
     int getIdMax();
-    Singer[] findAllByNameOrGenre(String name);
+    List<Singer> findAllByNameOrGenre(String name);
 
 }

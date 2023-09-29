@@ -4,6 +4,8 @@ import ra.business.entity.Singer;
 import ra.business.entity.Song;
 import ra.util.InputMethods;
 
+import java.util.List;
+
 public class SearchSong {
     public static void menuSearch(){
         while (true){
@@ -39,48 +41,44 @@ public class SearchSong {
     public  static void  findSongBySingerNameOrGenre(){
         System.out.println("Nhập tên ca sĩ hoặc thể loại cần tìm");
         String searchName = InputMethods.getString();
-        Song[] list = SongManagement.songController.findSongBySingerNameOrGenre(searchName);
-        if (list.length==0){
-            System.out.println("Không có kết ủa phù hợp");
+        List<Song> list = SongManagement.songController.findSongBySingerNameOrGenre(searchName);
+        if (list.isEmpty()){
+            System.out.println("Không có kết qủa phù hợp");
             return;
         }
 
-        for (int i = 0; i < list.length; i++) {
-            if (list[i]!=null){
-                list[i].displayData();
-            }
+        for (Song s:list) {
+            s.displayData();
         }
     }
     public  static void  findSingerBySingerNameOrGenre(){
         System.out.println("Nhập tên ca sĩ hoặc thể loại cần tìm");
         String searchName = InputMethods.getString();
-        Singer[] list = SingerManager.singerController.findAllByNameOrGenre(searchName);
-        if (list.length==0){
+        List<Singer> list = SingerManager.singerController.findAllByNameOrGenre(searchName);
+        if (list.isEmpty()){
             System.out.println("Không có kết ủa phù hợp");
             return;
         }
 
-        for (int i = 0; i < list.length; i++) {
-            if (list[i]!=null){
-                list[i].displayData();
-            }
+        for (Singer s:list) {
+            s.displayData();
         }
     }
     public  static void  sortSongByName(){
         System.out.println("Danh sách bài hát sắp xếp tătng dần");
-        Song[] list = SongManagement.songController.sortByName();
-        for (int i = 0; i < SongManagement.songController.getSize(); i++) {
-                list[i].displayData();
+        List<Song> list = SongManagement.songController.sortByName();
+        for (Song s:list) {
+            s.displayData();
         }
     }
     public static void findTop10Song(){
-        int size = SongManagement.songController.getSize();
+        int size = SongManagement.songController.findAll().size();
         if(size<=10){
             SongManagement.displayAllSong();
             return;
         }
-        for (int i = SongManagement.songController.getSize()-1; i > SongManagement.songController.getSize()-11 ; i--) {
-            SongManagement.songController.findAll()[i].displayData();
+        for (int i = size-1; i > size-11 ; i--) {
+            SongManagement.songController.findAll().get(i).displayData();
         }
     }
 }

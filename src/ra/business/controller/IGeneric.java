@@ -1,12 +1,13 @@
 package ra.business.controller;
 
+import java.util.List;
+
 public interface IGeneric<T,E>{
-    T[] findAll();
+    List<T> findAll();
     T findById(E id);
 
     void add(T t);
     void update(T t);
 
     void delete(E id);
-    int getSize();
 }

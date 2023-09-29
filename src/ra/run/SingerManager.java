@@ -61,13 +61,14 @@ public class SingerManager {
         }
     }
     public  static void displayAllSinger(){
-        if(singerController.getSize()==0){
+        if(singerController.findAll().isEmpty()){
             System.out.println("Danh sách trống");
             return;
         }
         System.out.println("Danh sách ca sĩ");
-        for (int i = 0; i < singerController.getSize(); i++) {
-            singerController.findAll()[i].displayData();
+        for (Singer s: singerController.findAll()
+             ) {
+            s.displayData();
         }
     }
     public static void editSinger(){

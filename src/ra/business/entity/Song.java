@@ -7,6 +7,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Song implements IOData{
+//    @Override
+//    public int compareTo(Song o) {
+//        return o.getSongName().compareTo(this.getSongName());
+//    }
+
     @Override
     public void inputData() {
         if(songId==null){

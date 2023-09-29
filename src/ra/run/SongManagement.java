@@ -45,7 +45,7 @@ public class SongManagement {
     }
 
     public static void addNewSong(){
-        if(SingerManager.singerController.getSize()==0){
+        if(SingerManager.singerController.findAll().isEmpty()){
             System.out.println("bạn cần thêm ca sĩ trước");
             return;
         }
@@ -62,13 +62,14 @@ public class SongManagement {
         }
     }
     public  static void displayAllSong(){
-        if(songController.getSize()==0){
+        if(songController.findAll().isEmpty()){
             System.out.println("Danh sách trống");
             return;
         }
         System.out.println("Danh sách ca sĩ");
-        for (int i = 0; i < songController.getSize(); i++) {
-            songController.findAll()[i].displayData();
+        for (Song s:songController.findAll()
+             ) {
+            s.displayData();
         }
     }
     public static void editSong(){
